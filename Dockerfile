@@ -1,10 +1,11 @@
-FROM powsybl/java:1.0.0
+FROM powsybl/java:2.0.0
 USER root
 WORKDIR /
 ARG DYNAWO_VERSION
 
 RUN apt-get update && \
   apt-get install -y libgomp1 && \
+  apt-get install unzip && \
   apt-get clean
 
 RUN wget https://github.com/dynawo/dynawo/releases/download/v${DYNAWO_VERSION}/Dynawo_Linux_v${DYNAWO_VERSION}.zip && \

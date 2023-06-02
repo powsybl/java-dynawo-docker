@@ -21,4 +21,4 @@ jobs:
           username: powsyblci
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           buildargs: DYNAWO_VERSION
-          tags: "1.4.1"
+          tags: "1.5.0"
