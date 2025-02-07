@@ -1,4 +1,4 @@
-FROM powsybl/java:2.0.0
+FROM powsybl/java:3.0.0
 USER root
 WORKDIR /
 ARG DYNAWO_VERSION
