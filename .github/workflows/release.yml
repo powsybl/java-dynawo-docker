@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  pull_request: #TODO
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: Release version (vX.X)
+        required: true
+      gitReference:
+        description: SHA of the commit from where to release or branch name
+        required: true
+
+jobs:
+  run-release:
+    uses: powsybl/github-ci/.github/workflows/release-base-docker-image-generic.yml@258b25ca0419bb9f3803b399cb329a616cdb6acb
+    with:
+      githubappId: ${{ vars.POWSYBL_ACTIONS_APPID }}
+      dockerImage: powsybl/java-dynawo
+      dockerUsername: powsyblci
+      releaseVersion: ${{ github.event.inputs.releaseVersion }}
+      gitReference: ${{ github.event.inputs.gitReference }}
+    secrets:
+      githubappPrivateKey: ${{ secrets.POWSYBL_ACTIONS_SECRET }}
+      docker-token: ${{ secrets.DOCKERHUB_TOKEN }}

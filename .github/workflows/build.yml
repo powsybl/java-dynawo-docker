@@ -4,52 +4,16 @@ on:
   push:
     branches:
       - 'main'
-    tags:
-      - 'v*.*.*'
+  pull_request:
 
 jobs:
-  build-and-deploy:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
-        with:
-          persist-credentials: false
-
-      - name: Build and publish Docker image
-        if: github.ref == 'refs/heads/main'
-        uses: elgohr/Publish-Docker-Github-Action@33a481be3e179353cb7793a92b57cf9a6c985860 # v4
-        env:
-          DYNAWO_VERSION: 1.6.0
-        with:
-          name: powsybl/java-dynawo
-          username: powsyblci
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          buildargs: DYNAWO_VERSION
-          tags: "latest"
-
-      - name: Broadcast update event
-        if: github.ref == 'refs/heads/main'
-        uses: gridsuite/broadcast-event@main
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          organizations: gridsuite
-          event-type: java_dynawo_updated
-
-      - name: Set env
-        if: startsWith(github.ref, 'refs/tags/')
-        run: echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV  # :11, strip 'refs/tags/v'
-
-      - name: Build and publish Docker image
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: elgohr/Publish-Docker-Github-Action@33a481be3e179353cb7793a92b57cf9a6c985860 # v4
-        env:
-          DYNAWO_VERSION: 1.6.0
-        with:
-          name: powsybl/java-dynawo
-          username: powsyblci
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          buildargs: DYNAWO_VERSION
-          tags: "${{ env.RELEASE_VERSION }}"
+  build:
+    uses: powsybl/github-ci/.github/workflows/build-base-docker-image-generic.yml@258b25ca0419bb9f3803b399cb329a616cdb6acb
+    with:
+      dockerImage: powsybl/java-dynawo
+      dockerUsername: powsyblci
+      eventOrganizations: gridsuite
+      eventType: java_dynawo_updated
+    secrets:
+      docker-token: ${{ secrets.DOCKERHUB_TOKEN }}
+      repo-token: ${{ secrets.REPO_ACCESS_TOKEN }}
