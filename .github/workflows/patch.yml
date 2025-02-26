@@ -1,0 +1,20 @@
+name: Patch
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: version to patch (vX.X)
+        required: true
+
+jobs:
+  run-patch:
+    uses: powsybl/github-ci/.github/workflows/patch-base-docker-image-generic.yml@0c71f00e40f49d9bbfc59acb821387e0751ab4d2
+    with:
+      githubappId: ${{ vars.POWSYBL_ACTIONS_APPID }}
+      dockerImage: powsybl/java-dynawo
+      dockerUsername: powsyblci
+      releaseVersion: ${{ github.event.inputs.releaseVersion }}
+    secrets:
+      githubappPrivateKey: ${{ secrets.POWSYBL_ACTIONS_SECRET }}
+      docker-token: ${{ secrets.DOCKERHUB_TOKEN }}
