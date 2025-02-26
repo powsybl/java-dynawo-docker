@@ -1,7 +1,6 @@
 name: Patch
 
 on:
-  pull_request: #TODO
   workflow_dispatch:
     inputs:
       releaseVersion:
