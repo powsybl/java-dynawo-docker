@@ -22,7 +22,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: elgohr/Publish-Docker-Github-Action@33a481be3e179353cb7793a92b57cf9a6c985860 # v4
         env:
-          DYNAWO_VERSION: 1.6.0
+          DYNAWO_VERSION: 1.7.0
         with:
           name: powsybl/java-dynawo
           username: powsyblci
@@ -46,7 +46,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: elgohr/Publish-Docker-Github-Action@33a481be3e179353cb7793a92b57cf9a6c985860 # v4
         env:
-          DYNAWO_VERSION: 1.6.0
+          DYNAWO_VERSION: 1.7.0
         with:
           name: powsybl/java-dynawo
           username: powsyblci
