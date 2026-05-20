@@ -1,0 +1,13 @@
+name: Docker Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-deploy:
+    uses: powsybl/github-ci/.github/workflows/manual-dockerdeploy-base-docker-image-generic.yml@d12b87ec9c671109509cb611c4a90da31563d78e
+    with:
+      dockerImage: docker.io/powsybl/java-dynawo
+      dockerUsername: powsyblci
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

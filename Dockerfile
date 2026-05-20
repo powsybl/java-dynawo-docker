@@ -1,7 +1,7 @@
 FROM powsybl/java:3.0.0
 USER root
 WORKDIR /
-ARG DYNAWO_VERSION
+ARG DYNAWO_VERSION=1.7.0
 
 RUN apt-get update && \
   apt-get install -y libgomp1 && \
