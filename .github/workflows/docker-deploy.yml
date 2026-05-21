@@ -5,7 +5,7 @@ on:
 
 jobs:
   run-deploy:
-    uses: powsybl/github-ci/.github/workflows/manual-dockerdeploy-base-docker-image-generic.yml@d12b87ec9c671109509cb611c4a90da31563d78e
+    uses: powsybl/github-ci/.github/workflows/manual-dockerdeploy-base-docker-image-generic.yml@c49157c2139394b2ecfde6d99c827ac39d014070
     with:
       dockerImage: docker.io/powsybl/java-dynawo
       dockerUsername: powsyblci
